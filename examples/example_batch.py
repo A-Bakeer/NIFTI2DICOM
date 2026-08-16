@@ -1,29 +1,21 @@
+# examples/example_batch.py
 """
 Example 2: Batch Convert Multiple NIfTI Files
 ==============================================
 
-This example converts all .nii.gz files in a folder to separate DICOM series.
-Each file gets its own subfolder.
+Converts all .nii.gz files in data/patients/ to separate DICOM series.
 """
 
 import sys
-sys.path.insert(0, '..')
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nifti2dicom import nifti2dicom_mfiles
 
-# Directory containing multiple .nii.gz files
-nifti_folder = "data/patients/"
+nifti_folder = os.path.join("data", "patients")
+output_base = os.path.join("output", "dicom_series")
 
-# Base output directory
-output_base = "output/dicom_series/"
-
-# Convert all files
-nifti2dicom_mfiles(
-    nifti_dir=nifti_folder,
-    out_dir=output_base
-)
+nifti2dicom_mfiles(nifti_dir=nifti_folder, out_dir=output_base)
 
 print(f"All DICOM series saved under: {output_base}")
-print("Folder structure:")
-print("  output/dicom_series/patient_001_brain/slice0000.dcm")
-print("  output/dicom_series/patient_002_liver/slice0000.dcm")
